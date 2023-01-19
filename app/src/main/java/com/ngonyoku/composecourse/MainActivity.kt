@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -25,58 +27,39 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            LearningColumns()
-        }
-    }
-}
+            Column(
+                modifier = Modifier
+                    .background(Color.LightGray)
+                    .fillMaxHeight(0.5f)
+                    .fillMaxWidth()
+                    .border(5.dp, Color.Blue)
+                    .padding(16.dp)
+                    .border(5.dp, Color.Black)
+                    .padding(25.dp)
+                    .border(2.dp, Color.Yellow)
+//                    .padding(top = 16.dp, start = 8.dp)
+//                    .requiredWidth(300.dp)
+            ) {
+                for (i in 1..2) {
+                    Text(text = "Text $i")
+                }
+                Text(
+                    text = "Clickable Text",
+                    Modifier
+                        .clickable {
 
-@Composable
-fun LearningRows() {
-    Row(
-        modifier = Modifier
-            .background(Color.LightGray)
-            .fillMaxSize(),
-        horizontalArrangement = Arrangement.SpaceEvenly,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        for (i in 1..5) {
-            Text(
-                text = "Value $i",
-                fontSize = 20.sp,
-                fontStyle = FontStyle.Normal,
-                fontFamily = FontFamily.Monospace
-            )
+                        }
+                )
+                Spacer(modifier = Modifier.height(50.dp))
+                Text(
+                    modifier = Modifier
+                        .border(3.dp, Color.Green)
+                        .padding(20.dp, 20.dp)
+                        .offset(30.dp, 20.dp) //Used to position views on X Y axis
+                        .border(5.dp, Color.Black),
+                    text = "Off Set",
+                )
+            }
         }
-    }
-}
-
-@Composable
-fun LearningColumns() {
-    /* The Column Trailing Lambda is a used to stack views on top of each other
-    * */
-    Column(
-        modifier = Modifier
-            .background(Color.LightGray)
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceEvenly
-    ) {
-        for (i in 1..10) {
-            Text(
-                text = "Value $i",
-                fontSize = 20.sp,
-                fontStyle = FontStyle.Italic,
-                fontFamily = FontFamily.Monospace
-            )
-        }
-    }
-}
-
-@Composable
-@Preview(showBackground = true)
-fun displayPreview() {
-    Surface {
-        LearningColumns()
-//        LearningRows()
     }
 }
