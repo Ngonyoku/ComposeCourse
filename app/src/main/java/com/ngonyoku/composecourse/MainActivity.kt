@@ -3,17 +3,25 @@ package com.ngonyoku.composecourse
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -27,37 +35,69 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            Column(
+            val painter = painterResource(id = R.drawable.image)
+            val description = "A image that makes sense"
+            val title = "Awesome Quote!"
+            Box(
                 modifier = Modifier
-                    .background(Color.LightGray)
-                    .fillMaxHeight(0.5f)
-                    .fillMaxWidth()
-                    .border(5.dp, Color.Blue)
+                    .fillMaxWidth(0.5f) //50% of width
                     .padding(16.dp)
-                    .border(5.dp, Color.Black)
-                    .padding(25.dp)
-                    .border(2.dp, Color.Yellow)
-//                    .padding(top = 16.dp, start = 8.dp)
-//                    .requiredWidth(300.dp)
             ) {
-                for (i in 1..2) {
-                    Text(text = "Text $i")
-                }
-                Text(
-                    text = "Clickable Text",
-                    Modifier
-                        .clickable {
+                ImageCard(painter = painter, contentDescription = description, title = title)
+            }
 
-                        }
-                )
-                Spacer(modifier = Modifier.height(50.dp))
+
+        }
+    }
+}
+
+@Composable
+fun ImageCard(
+    painter: Painter,
+    contentDescription: String,
+    title: String,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(15.dp),
+        elevation = 5.dp
+    ) {
+        Box(modifier = Modifier.height(200.dp)) {
+            Image(
+                painter = painter,
+                contentDescription = contentDescription,
+                contentScale = ContentScale.Crop //Center Crop
+            )
+            //Title Gradient
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .background(
+                        Brush.verticalGradient(
+                            colors = listOf(
+                                Color.Transparent,
+                                Color.Black
+                            ),
+                            startY = 300f
+                        )
+                    )
+            ) {
+
+            }
+            //Text
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .padding(12.dp),
+                contentAlignment = Alignment.BottomStart //Aligns the Content to the Bottom
+            ) {
                 Text(
-                    modifier = Modifier
-                        .border(3.dp, Color.Green)
-                        .padding(20.dp, 20.dp)
-                        .offset(30.dp, 20.dp) //Used to position views on X Y axis
-                        .border(5.dp, Color.Black),
-                    text = "Off Set",
+                    text = title,
+                    style = TextStyle(
+                        color = Color.White,
+                        fontSize = 16.sp
+                    )
                 )
             }
         }
