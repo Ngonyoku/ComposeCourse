@@ -45,8 +45,6 @@ class MainActivity : ComponentActivity() {
             ) {
                 ImageCard(painter = painter, contentDescription = description, title = title)
             }
-
-
         }
     }
 }
