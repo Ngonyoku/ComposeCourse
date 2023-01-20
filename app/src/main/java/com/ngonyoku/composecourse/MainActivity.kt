@@ -49,6 +49,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+
 @Composable
 fun ImageCard(
     painter: Painter,
