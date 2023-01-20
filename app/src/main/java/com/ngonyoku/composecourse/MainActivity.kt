@@ -58,7 +58,10 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun ColorBox(modifier: Modifier = Modifier, updateColor: (Color) -> Unit) {
+fun ColorBox(
+    modifier: Modifier = Modifier,
+    updateColor: (Color) -> Unit
+) {
     Box(
         modifier = modifier
             .background(Color.Blue)
