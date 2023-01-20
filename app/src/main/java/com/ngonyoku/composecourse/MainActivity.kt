@@ -3,102 +3,92 @@ package com.ngonyoku.composecourse
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.foundation.lazy.LazyColumn
+
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
+
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ngonyoku.composecourse.ui.theme.ComposeCourseTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        /**
+         * LazyColumn is the equivalent of RecyclerView
+         * */
+
         setContent {
-            val painter = painterResource(id = R.drawable.image)
-            val description = "A image that makes sense"
-            val title = "Awesome Quote!"
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth(0.5f) //50% of width
-                    .padding(16.dp)
-            ) {
-                ImageCard(painter = painter, contentDescription = description, title = title)
-            }
+//            LazyColumnImplementationUsingItemsIndexed(listOf("Java", "Kotlin", "C++", "Python"))
+//            LazyColumnImplementationUsingItems()
+            ScrollableColumn()
         }
     }
 }
-
 
 @Composable
-fun ImageCard(
-    painter: Painter,
-    contentDescription: String,
-    title: String,
-    modifier: Modifier = Modifier
-) {
-    Card(
-        modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(15.dp),
-        elevation = 5.dp
+fun ScrollableColumn() {
+    val scrollState = rememberScrollState()
+    Column(
+        Modifier
+            .verticalScroll(scrollState)
     ) {
-        Box(modifier = Modifier.height(200.dp)) {
-            Image(
-                painter = painter,
-                contentDescription = contentDescription,
-                contentScale = ContentScale.Crop //Center Crop
+        for (i in 1..100) {
+            Text(
+                text = "Item at position -> $i",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 50.dp),
+                textAlign = TextAlign.Center,
+                fontSize = 20.sp
             )
-            //Title Gradient
-            Box(
-                Modifier
-                    .fillMaxSize()
-                    .background(
-                        Brush.verticalGradient(
-                            colors = listOf(
-                                Color.Transparent,
-                                Color.Black
-                            ),
-                            startY = 300f
-                        )
-                    )
-            ) {
-
-            }
-            //Text
-            Box(
-                Modifier
-                    .fillMaxSize()
-                    .padding(12.dp),
-                contentAlignment = Alignment.BottomStart //Aligns the Content to the Bottom
-            ) {
-                Text(
-                    text = title,
-                    style = TextStyle(
-                        color = Color.White,
-                        fontSize = 16.sp
-                    )
-                )
-            }
         }
     }
 }
+
+@Composable
+fun LazyColumnImplementationUsingItemsIndexed(list: List<String>) {
+    LazyColumn() {
+        itemsIndexed(
+            list
+        ) { index, item ->
+
+            Text(
+                text = item,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 50.dp),
+                textAlign = TextAlign.Center,
+                fontSize = 20.sp
+            )
+        }
+    }
+}
+
+@Composable
+fun LazyColumnImplementationUsingItems() {
+    LazyColumn() {
+        items(20) {
+            Text(
+                text = "Item Index -> $it", //Displays the Index
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 50.dp),
+                textAlign = TextAlign.Center,
+                fontSize = 20.sp
+            )
+        }
+    }
+}
+
